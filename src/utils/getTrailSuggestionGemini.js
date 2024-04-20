@@ -43,7 +43,7 @@ const chat = model.startChat({
             role: 'user',
             parts: [
                 {
-                    text: 'You are about to receive a trail as information. Within that information if there is a comma everything before the comma is a trail and everything after the trail is information the user wants in their travel plans. Your job is to give the user suggestions on what to do while at that trail/park. If they specified they want to do a specific thing it is your job to incorporate that into suggestions on what to do while at that trail/park. You want to be very open and want to sell the idea of going to that place to them. Your response should be a couple sentences that accurately summarizes the best things to do while at that park/trail and to also include the activity that the user specified, if they did.',
+                    text: 'You are about to receive a trail as information. Within that information if there is a comma everything before the comma is a trail and everything after the trail is information the user wants in their travel plans. Your job is to give the user suggestions on what to do while at that trail/park. If they specified they want to do a specific thing it is your job to incorporate that into suggestions on what to do while at that trail/park. You want to be very open and want to sell the idea of going to that place to them. Your response should be 1-2 sentences that accurately summarizes the best things to do while at that park/trail and to also include the activity that the user specified, if they did.',
                 },
             ],
         },
@@ -51,12 +51,20 @@ const chat = model.startChat({
             role: 'model',
             parts: [
                 {
-                    text: 'I am about to receive a trail as information. Within that information if there is a comma everything before the comma is a trail and everything after the trail is information the user wants in their travel plans. My job is to give the user suggestions on what to do while at that trail/park. If they specified they want to do a specific thing it is my job to incoporate that into suggestions on what to do while at that trail/park. I want ot be very open and want to sell the idea of going to that place to them. My response should be a couple sentences that accurately summarizes the best things to do while at that park/trail and to also include the activity that the user specified, if the did.',
+                    text: 'I am about to receive a trail as information. Within that information if there is a comma everything before the comma is a trail and everything after the trail is information the user wants in their travel plans. My job is to give the user suggestions on what to do while at that trail/park. If they specified they want to do a specific thing it is my job to incoporate that into suggestions on what to do while at that trail/park. I want ot be very open and want to sell the idea of going to that place to them. My response should be 1-2 sentences that accurately summarizes the best things to do while at that park/trail and to also include the activity that the user specified, if the did.',
                 },
             ],
         },
     ],
 });
+
+const result = await chat.sendMessage(
+    'I want to have a picnic at Eaton Canyon Road'
+);
+
+const response = result.response.text();
+console.log(response);
+
 
 if (typeof require !== 'undefined' && require.main === module) {
     const result = await chat.sendMessage(

@@ -47,13 +47,14 @@ function ProfileDropdown({ hikeStarted }) {
                             className="h-6 w-6"
                         />
                     </button>
-                    <div className="flex flex-col py-4 pl-4 text-black w-full rounded-md text-sm">
+                    <div className="flex flex-col py-4 pl-4 text-black w-full rounded-2xl text-sm">
                         <p>Current hike time: {getTimeElapsed(seconds)}</p>
                         <p>Current hike miles: 0.2</p>
                         <p>Total miles: 4.2</p>
                         <p>Total trails: 1</p>
                         <p>Parks visited: 0</p>
                         <p>Badges collected: 2</p>
+                        <p>Collectibles: 3</p>
                     </div>
                 </div>
             )}
@@ -97,21 +98,6 @@ function ProfileDropdown({ hikeStarted }) {
                                     onClick={() => setStatsOpen(true)}
                                 >
                                     Stats
-                                </button>
-                            )}
-                        </Menu.Item>
-                    </div>
-                    <div className="px-1 py-1">
-                        <Menu.Item>
-                            {({ active }) => (
-                                <button
-                                    className={`${
-                                        active
-                                            ? 'bg-[#78c7d9] text-white'
-                                            : 'text-black'
-                                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                                >
-                                    Progress
                                 </button>
                             )}
                         </Menu.Item>
@@ -170,10 +156,10 @@ export function Navbar({ trailLocationRef }) {
             </div>
             <div className="flex flex-1 justify-center">
                 <p className=" font-sans text-lg text-white">
-                    Trail Adventures
+                    Next Outdoor Adventures
                 </p>
             </div>
-            <div className="flex flex-1 gap-x-10 justify-end">
+            <div className="flex flex-1 gap-x-8 justify-end">
                 <button>Badges</button>
                 <button>Leaderboards</button>
                 <ProfileDropdown hikeStarted={hikeStarted} />

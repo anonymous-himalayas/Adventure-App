@@ -10,11 +10,11 @@ export function Home() {
 
     return (
         <>
-            <div className="fixed w-full h-dvh">
+            <div className="fixed w-full">
                 <Navbar trailLocationRef={trailLocation} />
                 <div className="flex flex-row w-full h-dvh align-middle">
                     <Sidebar />
-                    <div className="basis-10/12 h-dvh">
+                    <div className="basis-10/12 h-full">
                         <div className=" w-[2] h-[40rem] border-2 rounded-3xl m-4">
                             {/* demo map version */}
                             <Map

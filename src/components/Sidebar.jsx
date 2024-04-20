@@ -1,15 +1,20 @@
 import { Fragment, useState } from 'react';
 import { Disclosure, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { SparklesIcon } from '@heroicons/react/20/solid';
+import { SparklesIcon, MapIcon } from '@heroicons/react/20/solid';
 import { Dialog } from '@headlessui/react';
 import { useTrailSuggestionGemini } from '../hooks/useTrailSuggestionGemini';
+import badge from '../assets/file.png';
+import questList from '../assets/quests.json';
 
 function SideButtons() {
+    const [questOpen, setQuestOpen] = useState(false);
     const trailSuggestion = useTrailSuggestionGemini();
 
+    let quests = questList.sort(() => 0.5 - Math.random()).slice(0, 3);
+
     return (
-        <>
+        <div className="flex flex-col justify-between h-full">
             <div className="flex flex-col items-center">
                 <Disclosure>
                     <div className="flex flex-row items-center space-x-2">
@@ -62,7 +67,49 @@ function SideButtons() {
                     {trailSuggestion.suggestion}
                 </p>
             </div>
-        </>
+
+            <div className="flex flex-col h-content items-center mb-20">
+                <button
+                    className="py-2 text-[#686CF1] font-medium"
+                    onClick={() => {
+                        setQuestOpen(!questOpen);
+                    }}
+                >
+                    <MapIcon
+                        style={{ color: '#686CF1' }}
+                        className="ml-1 h-5 w-5 inline mr-1 mb-1"
+                    />
+                    Quests
+                </button>
+
+                {questOpen && (
+                    <div className="fixed bottom-5 left-60 min-w-60 w-fit py-4 px-4 h-fit bg-10 rounded-2xl bg-[#686CF1] shadow-lg z-10">
+                        <button
+                            className="absolute h-6 w-6 top-3 right-3"
+                            onClick={() => {
+                                setQuestOpen(false);
+                            }}
+                        ></button>
+                        <div className="flex flex-col text-white w-full text-sm tracking-tight font-semibold">
+                            {quests.map(quest => {
+                                return <p key={quest}>{quest}</p>
+                            })}
+                        </div>
+                    </div>
+                )}
+
+                {/*  badge */}
+                <img className="w-7 h-7 mb-1" src={badge} />
+
+                <p className="text-md text-[#686CF1] mb-2 font-semibold">
+                    Level 2
+                </p>
+                <div className="relative bg-gray-300 h-1.5 w-[calc(100%-1rem)]">
+                    <div className="absolute bg-[#1cb2d4] h-1.5 w-[calc(100%-4rem)]" />
+                </div>
+                <p className="text-sm text-[#686CF1] mt-2">XP (350/500)</p>
+            </div>
+        </div>
     );
 }
 
@@ -171,7 +218,7 @@ function SuggestionDialog({ trailSuggestionRef }) {
 export function Sidebar() {
     return (
         <>
-            <div className="basis-2/12 h-dvh bg-[#EBEBEB]">
+            <div className="basis-2/12 h-full bg-[#EBEBEB]">
                 <SideButtons />
             </div>
         </>
