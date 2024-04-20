@@ -9,9 +9,9 @@ export function Map({
     // const map = useMap();
     useEffect(() => {}, [polyline]);
 
-    let pl = L.polyline(
-        coordinates
-    );
+    // let pl = L.polyline(
+    //     coordinates
+    // );
 
     return (
         <>
