@@ -47,12 +47,6 @@ export function Map({
                 {marker != null && <Marker position={marker} />}
                 <ChangeBounds bounds={bounds} />
             </MapContainer>
-            <button
-                type="button"
-                className=" absolute bottom-8 right-8 border-3 rounded-lg w-28 h-10 bg-[#686CF1] text-[#FEFEFE]"
-            >
-                Create Post
-            </button>
         </>
     );
 }

@@ -1,10 +1,62 @@
-import { useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
-import { Fragment } from 'react';
+import { XMarkIcon } from '@heroicons/react/20/solid';
+import { Fragment, useState, useEffect, useCallback } from 'react';
+import { Searchbar } from './Searchbar';
 
-function ProfileDropdown() {
+function ProfileDropdown({ hikeStarted }) {
+    const [statsOpen, setStatsOpen] = useState(false);
+    const [seconds, setSeconds] = useState(0);
+
+    useEffect(() => {
+        let interval;
+
+        if (hikeStarted) {
+            setSeconds(0);
+            interval = setInterval(() => setSeconds((s) => s + 1), 1000);
+        } else {
+            clearInterval(interval);
+        }
+
+        return () => clearInterval(interval);
+    }, [hikeStarted]);
+
+    const getTimeElapsed = useCallback((seconds) => {
+        const hrs = Math.floor(seconds / 3600);
+        const mins = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+
+        let ret = '';
+        ret += '' + hrs + ':' + (mins < 10 ? '0' : '');
+        ret += '' + mins + ':' + (secs < 10 ? '0' : '');
+        ret += '' + secs;
+        return ret;
+    }, []);
+
     return (
         <Menu as="div" className="relative inline-block text-left">
+            {statsOpen && (
+                <div className="fixed bottom-5 right-6 w-60 h-fit bg-10 rounded-2xl divide-y divide-gray-100 bg-white shadow-lg ring-1 ring-black/5 focus:outline-none z-10">
+                    <button
+                        className="absolute h-6 w-6 top-3 right-3"
+                        onClick={() => {
+                            setStatsOpen(false);
+                        }}
+                    >
+                        <XMarkIcon
+                            style={{ color: '#686CF1' }}
+                            className="h-6 w-6"
+                        />
+                    </button>
+                    <div className="flex flex-col py-4 pl-4 text-black w-full rounded-md text-sm">
+                        <p>Current hike time: {getTimeElapsed(seconds)}</p>
+                        <p>Current hike miles: 0.2</p>
+                        <p>Total miles: 4.2</p>
+                        <p>Total trails: 1</p>
+                        <p>Parks visited: 0</p>
+                        <p>Badges collected: 2</p>
+                    </div>
+                </div>
+            )}
             <div>
                 <Menu.Button className="justify-center rounded-md px-4 py-2 shadow-sm font-medium tracking-tighter text-white bg-[#1cb2d4] hover:bg-[#0f5f71] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                     Profile
@@ -42,8 +94,24 @@ function ProfileDropdown() {
                                             ? 'bg-[#78c7d9] text-white'
                                             : 'text-black'
                                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                    onClick={() => setStatsOpen(true)}
                                 >
                                     Stats
+                                </button>
+                            )}
+                        </Menu.Item>
+                    </div>
+                    <div className="px-1 py-1">
+                        <Menu.Item>
+                            {({ active }) => (
+                                <button
+                                    className={`${
+                                        active
+                                            ? 'bg-[#78c7d9] text-white'
+                                            : 'text-black'
+                                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                >
+                                    Progress
                                 </button>
                             )}
                         </Menu.Item>
@@ -82,22 +150,23 @@ function ProfileDropdown() {
     );
 }
 
-export function Navbar() {
-    const [search, setSearch] = useState('');
+export function Navbar({ trailLocationRef }) {
+    const [hikeStarted, setHikeStarted] = useState(false);
 
     return (
         <div className="h-16 w-full flex justify-between items-center px-10 shadow-md font-medium tracking-tighter bg-[#686CF1] text-[#FEFEFE]">
-            <div className="flex flex-1 gap-x-10 items-center">
-                <button>+ Start New Hike</button>
-                <input
-                    type="text"
-                    className="text-md rounded-lg w-full pl-3.5 h-10 text-gray-800"
-                    placeholder="What kind of trail do you want to hike?"
-                    value={search}
-                    onChange={(e) => {
-                        setSearch(e.target.value);
+            <div className="flex flex-1 gap-x-3 items-center">
+                <button
+                    className={`w-40 h-[2.25rem] rounded-md py-1 mt-0.5 ${
+                        !hikeStarted ? 'bg-[#1cb2d4]' : 'bg-rose-600'
+                    }`}
+                    onClick={() => {
+                        setHikeStarted(!hikeStarted);
                     }}
-                />
+                >
+                    {!hikeStarted ? '+ Start New Hike' : 'Stop Hike'}
+                </button>
+                <Searchbar trailLocationRef={trailLocationRef} />
             </div>
             <div className="flex flex-1 justify-center">
                 <p className=" font-sans text-lg text-white">
@@ -107,7 +176,7 @@ export function Navbar() {
             <div className="flex flex-1 gap-x-10 justify-end">
                 <button>Badges</button>
                 <button>Leaderboards</button>
-                <ProfileDropdown />
+                <ProfileDropdown hikeStarted={hikeStarted} />
             </div>
         </div>
     );

@@ -5,7 +5,9 @@ export function useTrailLocation() {
     const [coords, setCoords] = useState(undefined);
 
     useEffect(() => {
-        console.log(coords);
+        if (coords) {
+            console.log(`Nominatim coords: ${coords}`);
+        }
     }, [coords]);
 
     async function getTrailPolylineFromName(name) {
