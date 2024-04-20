@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Polyline, Marker } from 'react-leaflet';
 import { trailinfo } from '../assets/sample_traildata';
 
 export function Map({
-    marker = trailinfo.center, // format: [11.00, 11.00]
+    marker = trailinfo.center, // format: [11.00, 11.00] (set to undefined for no marker)
     polyline = trailinfo.coords, // format: list[center, center]
 }) {
     const [bounds, setBounds] = useState(
@@ -29,7 +29,7 @@ export function Map({
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 <Polyline positions={polyline} />
-                <Marker position={marker} />
+                {marker != undefined && <Marker position={marker} />}
             </MapContainer>
         </>
     );
