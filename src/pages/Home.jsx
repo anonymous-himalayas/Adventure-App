@@ -9,9 +9,9 @@ export function Home() {
                 <Navbar />
                 <div className="flex flex-row w-full h-dvh align-middle">
                     <Sidebar />
-                    <div className="basis-10/12 h-dvh" >
-                        <div className=" w-[2] h-[650px] border-2 rounded-3xl m-4" >
-                            <Map/>
+                    <div className="basis-10/12 h-dvh">
+                        <div className=" w-[2] h-[650px] border-2 rounded-3xl m-4">
+                            <Map />
                         </div>
                     </div>
                 </div>

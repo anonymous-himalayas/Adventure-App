@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
@@ -24,7 +25,9 @@ function ProfileDropdown() {
                             {({ active }) => (
                                 <button
                                     className={`${
-                                        active ? 'bg-[#78c7d9] text-white' : ''
+                                        active
+                                            ? 'bg-[#78c7d9] text-white'
+                                            : 'text-black'
                                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                 >
                                     View Profile
@@ -35,10 +38,12 @@ function ProfileDropdown() {
                             {({ active }) => (
                                 <button
                                     className={`${
-                                        active ? 'bg-[#78c7d9] text-white' : ''
+                                        active
+                                            ? 'bg-[#78c7d9] text-white'
+                                            : 'text-black'
                                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                 >
-                                    Update Info
+                                    Stats
                                 </button>
                             )}
                         </Menu.Item>
@@ -48,10 +53,12 @@ function ProfileDropdown() {
                             {({ active }) => (
                                 <button
                                     className={`${
-                                        active ? 'bg-[#78c7d9] text-white' : ''
+                                        active
+                                            ? 'bg-[#78c7d9] text-white'
+                                            : 'text-black'
                                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                 >
-                                    Stats
+                                    Privacy
                                 </button>
                             )}
                         </Menu.Item>
@@ -59,10 +66,12 @@ function ProfileDropdown() {
                             {({ active }) => (
                                 <button
                                     className={`${
-                                        active ? 'bg-[#78c7d9] text-white' : ''
+                                        active
+                                            ? 'bg-[#78c7d9] text-white'
+                                            : 'text-black'
                                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                 >
-                                    Settings
+                                    Delete Account
                                 </button>
                             )}
                         </Menu.Item>
@@ -74,14 +83,26 @@ function ProfileDropdown() {
 }
 
 export function Navbar() {
+    const [search, setSearch] = useState('');
+
     return (
-        <div className="h-16 w-full flex justify-between items-center px-10 shadow-md font-medium tracking-tighter">
-            <div className="flex flex-1 gap-x-10">
+        <div className="h-16 w-full flex justify-between items-center px-10 shadow-md font-medium tracking-tighter bg-[#686CF1] text-[#FEFEFE]">
+            <div className="flex flex-1 gap-x-10 items-center">
                 <button>+ Start New Hike</button>
-                <button>Create Post</button>
+                <input
+                    type="text"
+                    className="text-md rounded-lg w-full pl-3.5 h-10 text-gray-800"
+                    placeholder="What kind of trail do you want to hike?"
+                    value={search}
+                    onChange={(e) => {
+                        setSearch(e.target.value);
+                    }}
+                />
             </div>
             <div className="flex flex-1 justify-center">
-                <p className=" font-sans text-lg">TrailAdventures</p>
+                <p className=" font-sans text-lg text-white">
+                    Trail Adventures
+                </p>
             </div>
             <div className="flex flex-1 gap-x-10 justify-end">
                 <button>Badges</button>
