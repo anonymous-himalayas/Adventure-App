@@ -66,11 +66,10 @@ export function Map({
         <>
             <MapContainer
                 className="w-full h-full rounded-3xl z-0"
-                zoom={11}
                 scrollWheelZoom={false}
                 preferCanvas={true}
                 bounds={bounds}
-                boundsOptions={{ padding: [20, 20] }}
+                boundsOptions={{ padding: [50, 50] }}
             >
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

@@ -24,15 +24,22 @@ import { Input } from '../components/ui/input';
 import { Progress } from '../components/ui/progress';
 import { Map } from '../components/Map.jsx';
 import { useState, useEffect } from 'react';
-import { useTrailLocation } from '../hooks/useTrailLocation.js'
-import { useTrailNameGemini } from '../hooks/useTrailNameGemini.js'
+import { useTrailLocation } from '../hooks/useTrailLocation.js';
+import { useTrailNameGemini } from '../hooks/useTrailNameGemini.js';
 import { useTrailSuggestionGemini } from '../hooks/useTrailSuggestionGemini';
 
-
 export function NewHome() {
+    const [query, setQuery] = useState('')
+    const [selectTrail, setSelectTrail] = useState('')
+    const [selectMenuOpen, setSelectMenuOpen] = useState(false);
+
     const [seconds, setSeconds] = useState(0);
     const [hikeStarted, setHikeStarted] = useState(false);
     const [statsMenuOpen, setStatsMenuOpen] = useState(false);
+
+    const trailLocation = useTrailLocation();
+    const trailName = useTrailNameGemini();
+    const trailSuggestion = useTrailSuggestionGemini();
 
     useEffect(() => {
         let interval;
@@ -48,7 +55,7 @@ export function NewHome() {
     return (
         <div className="flex h-screen bg-gradient-to-r from-green-200 via-green-300 to-blue-200">
             {/* Left sidebar */}
-            <nav className="flex flex-col w-64 h-full px-4 py-8 bg-white border-r">
+            <nav className="flex flex-col w-64 h-full px-4 py-5 bg-white border-r">
                 <h2 className="text-2xl font-semibold text-gray-900">
                     Trail Adventures
                 </h2>
@@ -67,8 +74,13 @@ export function NewHome() {
                             <Input
                                 className="tracking-tighter"
                                 placeholder="What trail do you want to find?"
+                                onChange={e => setQuery(e.target.value)}
+                                onKeyDown={e => e.key === 'Enter' && console.log('input entered')}
+                                value={query}
                             />
+                            <button onClick={() => {}}>
                             <Sparkles className="absolute right-2 top-2.5 w-5 h-5 text-gray-200" />
+                            </button>
                         </span>
                         <ul className="space-y-2 mt-5">
                             <li>
@@ -99,8 +111,8 @@ export function NewHome() {
                                 </Button>
                             </li>
                             <li>
-                                <p className='text-sm tracking-tighter w-56 break-words'>
-                                    hihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihi
+                                <p className="text-sm tracking-tighter w-56 break-words max-h-56 overflow-auto">
+                                    {trailSuggestion.suggestion}
                                 </p>
                             </li>
                         </ul>

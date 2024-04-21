@@ -5,7 +5,8 @@
  */
 import { Button } from '../components/ui/button';
 import { AvatarImage, AvatarFallback, Avatar } from '../components/ui/avatar';
-import badge from '../assets/ruby.png';
+import SilverBadge from '../assets/silver.png';
+import GoldBadge from '../assets/gold.png';
 
 export function Leaderboard() {
     return (
@@ -62,6 +63,7 @@ export function Leaderboard() {
                                 player="Peter the Anteater"
                                 level="5"
                                 progress="bg-primary rounded-full h-2 w-[60%]"
+
                             />
                             <LeaderboardRow
                                 rank="2"
@@ -144,7 +146,7 @@ function ListOrderedIcon(props) {
     );
 }
 
-function LeaderboardRow({ rank, player, level, progress }) {
+function LeaderboardRow({ rank, player, level, progress, badge }) {
     return (
         <tr>
             <td className="px-6 py-4 whitespace-nowrap">
@@ -158,8 +160,7 @@ function LeaderboardRow({ rank, player, level, progress }) {
                 <div className="flex items-center">
                     <Avatar className="w-10 h-10 mr-4">
                         {/*  badge */}
-                        {/* <AvatarImage alt="User Avatar" src={badge} /> */}
-                        <img src={badge} alt="badge" className="h-10 w-10" />
+                        <AvatarImage alt="User Avatar" src={badge} />
                         <AvatarFallback>BO</AvatarFallback>
                     </Avatar>
                     <div>
