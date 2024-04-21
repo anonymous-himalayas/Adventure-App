@@ -47,9 +47,6 @@ import { useTrailSuggestionGemini } from '../hooks/useTrailSuggestionGemini.js';
 import badge from '../assets/silver.png';
 import questList from '../assets/quests.json';
 
-const mainColor = "#1d6864"
-const accentColor = "#4ccdc6"
-
 export function Home() {
     const [query, setQuery] = useState('');
     const [selectTrail, setSelectTrail] = useState('');
@@ -91,15 +88,15 @@ export function Home() {
         <div className="flex h-screen bg-white">
             {/* Left sidebar */}
             <nav className="flex flex-col w-64 h-full px-4 py-4 bg-white border-r-2">
-                <h2 className="text-2xl font-semibold text-gray-900 w-full text-center mt-1">
+                <h2 className="text-2xl text-gray-900 w-full text-center mt-1 uppercase font-thin tracking-widest">
                     TrailQuest
                 </h2>
                 <div className="flex flex-col justify-between flex-1 mt-5">
                     {/* Top sidebar buttons */}
                     <aside>
                         <Button
-                            className={`w-full mb-2 text-white ${
-                                hikeStarted ? 'bg-rose-500' : 'bg-[#1d6864] hover:bg-[#2d9f99]                                ]'
+                            className={`w-full mb-2 text-white tracking-wide ${
+                                hikeStarted ? 'bg-rose-500 hover:bg-rose-400' : 'bg-[#1d6864] hover:bg-[#2d9f99]                                ]'
                             }`}
                             onClick={() => setHikeStarted(!hikeStarted)}
                         >
@@ -174,14 +171,14 @@ export function Home() {
                         <div className="flex flex-col items-center">
                             <div className="w-full h-0.5 mb-3 mt-1 bg-gray-300" />
                             <img className="w-8 h-8" src={badge} />
-                            <div className="text-sm font-medium text-gray-700">
+                            <div className="mt-1 text-sm font-extrabold uppercase tracking-wider text-gray-600">
                                 Level 3
                             </div>
                             <Progress
-                                className="w-full bg-gray-300 my-1 h-1.5"
+                                className="w-full bg-gray-300 mb-1 mt-0.5 h-1.5"
                                 value={70}
                             />
-                            <span className="text-xs font-semibold text-gray-500">
+                            <span className="text-xs font-bold text-gray-500">
                                 XP (350/500)
                             </span>
                         </div>
@@ -194,13 +191,13 @@ export function Home() {
                     <div />
                     <div className="space-x-4">
                         <Button
-                            className="text-white bg-[#1d6864] hover:bg-[#2d9f99] hover:text-white"
+                            className="text-white bg-[#1d6864] hover:bg-[#2d9f99] hover:text-white font-semibold tracking-wide"
                             variant="ghost"
                         >
                             Badges
                         </Button>
                         <Button
-                            className="text-white bg-[#1d6864] hover:bg-[#2d9f99] hover:text-white"
+                            className="text-white bg-[#1d6864] hover:bg-[#2d9f99] hover:text-white font-semibold tracking-wide"
                             variant="ghost"
                             onClick={toLeaderboard}
                         >
@@ -232,7 +229,7 @@ function ProfileDropdown({ setStatsMenuOpen }) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button className="text-white bg-[#1d6864]" variant="ghost">
+                <Button className="text-white bg-[#1d6864] font-semibold tracking-wide" variant="ghost">
                     Profile
                 </Button>
             </DropdownMenuTrigger>
@@ -296,7 +293,7 @@ function SavedRecentAccordion() {
             <AccordionItem value="item-1">
                 <AccordionTrigger>
                     <Bookmark className="text-[#1d6864] w-6 h-6 mr-2" />
-                    Saved
+                    <p className='tracking-wide'>Saved</p>
                 </AccordionTrigger>
                 <AccordionContent>
                     <ul className="pl-2">
@@ -309,7 +306,7 @@ function SavedRecentAccordion() {
             <AccordionItem value="item-2">
                 <AccordionTrigger>
                     <History className="text-[#1d6864] w-6 h-6 mr-2" />
-                    Recent
+                    <p className='tracking-wide'>Recent</p>
                 </AccordionTrigger>
                 <AccordionContent>
                     <ul className="pl-2">
@@ -330,11 +327,11 @@ function SuggestionDialog({ trailSuggestion }) {
         <Dialog>
             <DialogTrigger asChild>
                 <Button
-                    className="justify-start text-md -mt-2.5"
+                    className="justify-start text-md -mt-2"
                     variant="ghost"
                 >
                     <Lightbulb className="text-[#1d6864] w-6 h-6 -ml-4 mr-2" />
-                    Suggestions
+                    <p className='tracking-wide'>Get Suggestions</p>
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
@@ -377,7 +374,7 @@ function QuestMenu({ quests }) {
             <DropdownMenuTrigger asChild>
                 <Button className="justify-start text-md pl-1" variant="ghost">
                     <MapIcon className="text-[#1d6864] w-6 h-6 mr-2" />
-                    Quests
+                    <p className='tracking-wide'>Quests</p>
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="mt-1 mr-10 w-content">

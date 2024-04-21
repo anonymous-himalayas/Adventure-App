@@ -15,7 +15,7 @@ export function Leaderboard() {
         <div className="flex bg-gray-100 dark:bg-gray-800 py-12 px-4 sm:px-6 lg:px-8 w-full h-dvh items-center flex-col">
             <div className="w-[1000px] mx-auto">
                 <div className="flex items-center justify-between mb-8">
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 tracking-wide">
                         Leaderboard
                     </h2>
                     <div className="flex items-center space-x-4">
@@ -28,11 +28,13 @@ export function Leaderboard() {
                         </Button>
                         <Button variant="outline">
                             <FilterIcon className="h-5 w-5 mr-2" />
-                            Filter
+                            <p className="font-semibold tracking-wide">
+                                Filter
+                            </p>
                         </Button>
                         <Button variant="outline">
                             <ListOrderedIcon className="h-5 w-5 mr-2" />
-                            Sort
+                            <p className="font-semibold tracking-wide">Sort</p>
                         </Button>
                     </div>
                 </div>
