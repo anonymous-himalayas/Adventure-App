@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SparklesIcon, MapIcon } from '@heroicons/react/20/solid';
 import { Dialog } from '@headlessui/react';
 import { useTrailSuggestionGemini } from '../hooks/useTrailSuggestionGemini';
-import badge from '../assets/file.png';
+import badge from '../assets/silver.png';
 import questList from '../assets/quests.json';
 
 function SideButtons() {
@@ -91,8 +91,8 @@ function SideButtons() {
                             }}
                         ></button>
                         <div className="flex flex-col text-white w-full text-sm tracking-tight font-semibold">
-                            {quests.map(quest => {
-                                return <p key={quest}>{quest}</p>
+                            {quests.map((quest) => {
+                                return <p key={quest}>{quest}</p>;
                             })}
                         </div>
                     </div>
@@ -102,7 +102,7 @@ function SideButtons() {
                 <img className="w-7 h-7 mb-1" src={badge} />
 
                 <p className="text-md text-[#686CF1] mb-2 font-semibold">
-                    Level 2
+                    Level 3
                 </p>
                 <div className="relative bg-gray-300 h-1.5 w-[calc(100%-1rem)]">
                     <div className="absolute bg-[#1cb2d4] h-1.5 w-[calc(100%-4rem)]" />

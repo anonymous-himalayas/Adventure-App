@@ -65,7 +65,7 @@ export function Map({
     return (
         <>
             <MapContainer
-                className="w-full h-full rounded-3xl"
+                className="w-full h-full rounded-3xl z-0"
                 zoom={11}
                 scrollWheelZoom={false}
                 preferCanvas={true}
@@ -80,25 +80,24 @@ export function Map({
                 {marker != null && <Marker position={marker} />}
 
                 {/* custom icons */}
-                <Marker position={[33.891729, -117.691425]} icon={squirrelIcon} >
+                <Marker position={[33.891729, -117.691425]} icon={squirrelIcon}>
                     <Popup>
                         Squirrels can find food buried beneath a foot of snow.
                     </Popup>
                 </Marker>
-                <Marker position={[33.890101, -117.691167]} icon={deerIcon} >
+                <Marker position={[33.890101, -117.691167]} icon={deerIcon}>
                     <Popup>
                         Mule Deer can reach speeds of up to 45 miles per hour.
                     </Popup>
                 </Marker>
-                <Marker position={[33.890591, -117.692927]} icon={lionIcon} >
+                <Marker position={[33.890591, -117.692927]} icon={lionIcon}>
                     <Popup>
-                        Mountain Lions have powerful hind legs enable them to jump as far as 40 to 45 feet.
+                        Mountain Lions have powerful hind legs enable them to
+                        jump as far as 40 to 45 feet.
                     </Popup>
                 </Marker>
-                <Marker position={[33.893352, -117.693785]} icon={raccoonIcon} >
-                    <Popup>
-                    Raccoon's masks are anti-glare devices.
-                    </Popup>
+                <Marker position={[33.893352, -117.693785]} icon={raccoonIcon}>
+                    <Popup>Raccoon's masks are anti-glare devices.</Popup>
                 </Marker>
 
                 <ChangeBounds bounds={bounds} />
