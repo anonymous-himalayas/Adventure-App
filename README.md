@@ -14,6 +14,8 @@
 </div>
 
 ## Overview
+One half of American adults report spending 5 hours or fewer outside in nature each week, with steady decline in recent years. Yet, research shows that connection to nature is essential to quality of life, health, and social well-being. Given this problem, we were inspired to create TrailQuest.
+
 TrailQuest is a multi-featured AI-powered hiking gamification plaform that brings the fun to outdoor activities such as hiking and picnicking. TrailQuest strives to bring more people outside to embrace the full force of nature by introducing motivational systems inspired by popular video games. TrailQuests' gamification systems include a badge system, quests, and hunting for collectibles. By introducing these types of features, we expect more people to be influenced to partake in outdoor activities.
 
 ## Features
@@ -27,6 +29,8 @@ We have also provided an AI-powered suggestion copilot to help users plan their 
 
 ### Badges and XP
 Finally, our gamification system includes XP and levels which further motivates the user to participate in outdoor activities. Our XP system is based off the total amount of trails they complete and the total miles they walk. In addition, we have an integrated quest system that encourages the user to level up faster through partaking in daily challenges which grant additional XP. As your level gets higher, users begin to earn badges in a tiered approach starting from bronze to the ultimate tier of ruby. For true outdoors aficionados, we have incorporated a leaderboard system where top hikers are displayed for the world to see.
+
+## App Demo
 
 ## Installation
 1. Install [Node.js](https://nodejs.org)
