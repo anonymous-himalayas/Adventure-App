@@ -39,13 +39,15 @@ import { Button } from '../components/ui/button.jsx';
 import { Input } from '../components/ui/input.jsx';
 import { Progress } from '../components/ui/progress.jsx';
 import { Map } from '../components/Map.jsx';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useTrailLocation } from '../hooks/useTrailLocation.js';
 import { useTrailNameGemini } from '../hooks/useTrailNameGemini.js';
 import { useNavigate } from 'react-router-dom';
 import { useTrailSuggestionGemini } from '../hooks/useTrailSuggestionGemini.js';
+import logo from '../assets/logo.png';
 import badge from '../assets/silver.png';
 import questList from '../assets/quests.json';
+import trailCoords from '../assets/demo_traildata.js';
 
 export function Home() {
     const [query, setQuery] = useState('');
@@ -79,15 +81,22 @@ export function Home() {
         return () => clearInterval(interval);
     }, [hikeStarted]);
 
-    const toLeaderboard = () => {
+    const toLeaderboard = useCallback(() => {
         navigate('/leaderboard');
-    };
+    }, [navigate]);
+
+    const toBadges = useCallback(() => {
+        navigate('/badges');
+    }, [navigate]);
 
     return (
         // bg-gradient-to-r from-green-200 via-green-300 to-blue-200
         <div className="flex h-screen bg-white">
             {/* Left sidebar */}
             <nav className="flex flex-col w-64 h-full px-4 py-4 bg-white border-r-2">
+                <div className="flex justify-center w-full">
+                    <img className="h-16" src={logo} />
+                </div>
                 <h2 className="text-2xl text-gray-900 w-full text-center mt-1 uppercase font-thin tracking-widest">
                     TrailQuest
                 </h2>
@@ -96,7 +105,9 @@ export function Home() {
                     <aside>
                         <Button
                             className={`w-full mb-2 text-white tracking-wide ${
-                                hikeStarted ? 'bg-rose-500 hover:bg-rose-400' : 'bg-[#1d6864] hover:bg-[#2d9f99]                                ]'
+                                hikeStarted
+                                    ? 'bg-rose-500 hover:bg-rose-400'
+                                    : 'bg-[#1d6864] hover:bg-[#2d9f99]                                ]'
                             }`}
                             onClick={() => setHikeStarted(!hikeStarted)}
                         >
@@ -159,7 +170,7 @@ export function Home() {
                                 />
                             </li>
                             <li>
-                                <p className="text-sm tracking-tighter w-56 break-words max-h-56 overflow-auto">
+                                <p className="text-sm tracking-tighter w-56 break-words max-h-40 -mt-1 overflow-auto">
                                     {trailSuggestion.suggestion}
                                 </p>
                             </li>
@@ -193,6 +204,7 @@ export function Home() {
                         <Button
                             className="text-white bg-[#1d6864] hover:bg-[#2d9f99] hover:text-white font-semibold tracking-wide"
                             variant="ghost"
+                            onClick={toBadges}
                         >
                             Badges
                         </Button>
@@ -209,7 +221,7 @@ export function Home() {
                 <div className="relative mt-6">
                     <div className="w-full h-[35rem] rounded-md">
                         <Map
-                            marker={trailLocation.center}
+                            marker={trailCoords.center}
                             polyline={trailLocation.polyline}
                         />
                     </div>
@@ -229,7 +241,10 @@ function ProfileDropdown({ setStatsMenuOpen }) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button className="text-white bg-[#1d6864] font-semibold tracking-wide" variant="ghost">
+                <Button
+                    className="text-white bg-[#1d6864] font-semibold tracking-wide"
+                    variant="ghost"
+                >
                     Profile
                 </Button>
             </DropdownMenuTrigger>
@@ -293,7 +308,7 @@ function SavedRecentAccordion() {
             <AccordionItem value="item-1">
                 <AccordionTrigger>
                     <Bookmark className="text-[#1d6864] w-6 h-6 mr-2" />
-                    <p className='tracking-wide'>Saved</p>
+                    <p className="tracking-wide">Saved</p>
                 </AccordionTrigger>
                 <AccordionContent>
                     <ul className="pl-2">
@@ -306,7 +321,7 @@ function SavedRecentAccordion() {
             <AccordionItem value="item-2">
                 <AccordionTrigger>
                     <History className="text-[#1d6864] w-6 h-6 mr-2" />
-                    <p className='tracking-wide'>Recent</p>
+                    <p className="tracking-wide">Recent</p>
                 </AccordionTrigger>
                 <AccordionContent>
                     <ul className="pl-2">
@@ -326,12 +341,9 @@ function SuggestionDialog({ trailSuggestion }) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button
-                    className="justify-start text-md -mt-2"
-                    variant="ghost"
-                >
+                <Button className="justify-start text-md -mt-2" variant="ghost">
                     <Lightbulb className="text-[#1d6864] w-6 h-6 -ml-4 mr-2" />
-                    <p className='tracking-wide'>Get Suggestions</p>
+                    <p className="tracking-wide">Get Suggestions</p>
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
@@ -374,7 +386,7 @@ function QuestMenu({ quests }) {
             <DropdownMenuTrigger asChild>
                 <Button className="justify-start text-md pl-1" variant="ghost">
                     <MapIcon className="text-[#1d6864] w-6 h-6 mr-2" />
-                    <p className='tracking-wide'>Quests</p>
+                    <p className="tracking-wide">Quests</p>
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="mt-1 mr-10 w-content">

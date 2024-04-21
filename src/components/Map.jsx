@@ -23,7 +23,7 @@ export function Map({
     polyline = demoTrailinfo.coords, // format: list[center, center]
 }) {
     const [bounds, setBounds] = useState(
-        L.polyline(polyline).getBounds().extend(marker)
+        L.polyline(polyline).getBounds()
     );
 
     useEffect(() => {
