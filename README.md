@@ -31,7 +31,7 @@ We have also provided an AI-powered suggestion copilot to help users plan their 
 ### Badges and XP
 Finally, our gamification system includes XP and levels which further motivates the user to participate in outdoor activities. Our XP system is based off the total amount of trails they complete and the total miles they walk. In addition, we have an integrated quest system that encourages the user to level up faster through partaking in daily challenges which grant additional XP. As your level gets higher, users begin to earn badges in a tiered approach starting from bronze to the ultimate tier of ruby. For true outdoors aficionados, we have incorporated a leaderboard system where top hikers are displayed for the world to see.
 
-## App Demo
+## Application Demo
 https://github.com/anonymous-himalayas/TrailQuest/assets/108317527/a9243c0e-d076-482e-9efd-550f32bf0976
 
 ## Installation
