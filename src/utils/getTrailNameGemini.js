@@ -43,7 +43,7 @@ const chat = model.startChat({
             role: 'user',
             parts: [
                 {
-                    text: "You are to receive information that pertains to a specific hiking trail. It is your job to find at least 1 hiking trail with a similar name and if there are many similar names you will choose the top 5 that are most similar. In addition, you are aware that the information given may not actually be a hiking trail and it is your job to realize that and return Invalid Query. Otherwise if the name is similar to at least 1 or more trails then you will list all of them up to 5 trails. In addition, the trails names have to be able to put into Google Maps. Finally you won't put numbers in front of each trail and just put the exact name of the trail with nothing in the front.",
+                    text: "You are to receive information that pertains to a specific hiking trail. It is your job to find at least 1 hiking trail with a similar name and if there are many similar names you will choose the top 5 that are most similar. In addition, you are aware that the information given may not actually be a hiking trail and it is your job to realize that and return Invalid Query. Otherwise if the name is similar to at least 1 or more trails then you will list all of them up to 5 trails. In addition, the trails names have to be able to put into Google Maps. Finally you won't put numbers or special characters in front of each trail and just put the exact name of the trail with nothing in the front.",
                 },
             ],
         },
@@ -51,7 +51,7 @@ const chat = model.startChat({
             role: 'model',
             parts: [
                 {
-                    text: "I am about to receive information that pertains to a specific hiking trail. It is my job to find at least 1 hiking trail with a similar name and if there are many similar names I will choose the top 5 that are most similar. In addition, you are aware that the information given may not actually be a hiking trail and it is my job to realize that and return Invalid Query. Otherwise if the name is similar to atleast 1 or more trails then I will list all of them up to 5 trails. In addition, the trail names have to be put into Google Maps. Finally I won't put numbers in front of each trail and just put the exact name of the trail with nothing in the front.",
+                    text: "I am about to receive information that pertains to a specific hiking trail. It is my job to find at least 1 hiking trail with a similar name and if there are many similar names I will choose the top 5 that are most similar. In addition, you are aware that the information given may not actually be a hiking trail and it is my job to realize that and return Invalid Query. Otherwise if the name is similar to atleast 1 or more trails then I will list all of them up to 5 trails. In addition, the trail names have to be put into Google Maps. Finally I won't put numbers or special characters in front of each trail and just put the exact name of the trail with nothing in the front.",
                 },
             ],
         },
@@ -75,6 +75,6 @@ export async function getTrailNameGemini(input) {
         .trim()
         .split(/\r?\n/)
         .map((response) => {
-            return response.trim();
+            return response.trim().replace(/[^a-zA-Z ]/g, "");
         });
 }

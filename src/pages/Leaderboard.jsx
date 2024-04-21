@@ -6,11 +6,10 @@ import SilverBadge from '../assets/silver.png';
 import GoldBadge from '../assets/gold.png';
 
 export function Leaderboard() {
-
     let navigate = useNavigate();
     const backToHome = () => {
-        navigate('/test');
-    }
+        navigate('/');
+    };
 
     return (
         <div className="flex bg-gray-100 dark:bg-gray-800 py-12 px-4 sm:px-6 lg:px-8 w-full h-dvh items-center flex-col">
@@ -20,13 +19,13 @@ export function Leaderboard() {
                         Leaderboard
                     </h2>
                     <div className="flex items-center space-x-4">
-                    <Button
-                        variant="primary"
-                        className="bg-[#686CF1] text-white w-20"
-                        onClick={backToHome}
-                    >
-                        Back
-                    </Button>
+                        <Button
+                            variant="primary"
+                            className="bg-[#1d6864] text-white w-20 hover:bg-[#2d9f99]"
+                            onClick={backToHome}
+                        >
+                            Back
+                        </Button>
                         <Button variant="outline">
                             <FilterIcon className="h-5 w-5 mr-2" />
                             Filter
@@ -39,7 +38,7 @@ export function Leaderboard() {
                 </div>
                 <div className="bg-white dark:bg-gray-700 rounded-lg shadow overflow-hidden">
                     <table className="w-full divide-y divide-gray-200 dark:divide-gray-600">
-                        <thead className="bg-[#686CF1] dark:bg-gray-800">
+                        <thead className="bg-[#1d6864] dark:bg-gray-800">
                             <tr>
                                 <th
                                     className="px-6 py-3 text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider"
@@ -198,36 +197,3 @@ function LeaderboardRow({ rank, player, level, progress, badge }) {
         </tr>
     );
 }
-// === styles.css ===
-
-// body {
-//   font-family: var(--font-inter), sans-serif;
-// }
-
-// h1, h2, h3, h4, h5, h6 {
-//   font-family: var(--font-inter), sans-serif;
-// }
-
-// === layout.jsx ===
-
-// // This is the root layout component for your Next.js app.
-// // Learn more: https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#root-layout-required
-
-// import { Inter } from 'next/font/google'
-// import './styles.css'
-
-// const inter = Inter({
-//   subsets: ['latin'],
-//   display: 'swap',
-//   variable: '--font-inter',
-// })
-
-// export default function Layout({ children }) {
-//   return (
-//     <html lang="en">
-//       <body className={inter.variable}>
-//         {children}
-//       </body>
-//     </html>
-//   )
-// }

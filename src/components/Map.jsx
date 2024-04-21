@@ -8,11 +8,8 @@ import {
     useMap,
 } from 'react-leaflet';
 import L, { Icon } from 'leaflet';
-import { trailinfo } from '../assets/demo_traildata';
-import deer from '../assets/deer.png';
-import raccoon from '../assets/rac.png';
-import lion from '../assets/lion.png';
-import squirrel from '../assets/squirrel.png';
+import startTrailinfo from '../assets/start_traildata';
+import demoTrailinfo from '../assets/demo_traildata';
 
 function ChangeBounds({ bounds }) {
     const map = useMap();
@@ -22,8 +19,8 @@ function ChangeBounds({ bounds }) {
 }
 
 export function Map({
-    marker = trailinfo.center, // format: [11.00, 11.00] (set to undefined for no marker)
-    polyline = trailinfo.coords, // format: list[center, center]
+    marker = startTrailinfo.center, // format: [11.00, 11.00] (set to undefined for no marker)
+    polyline = demoTrailinfo.coords, // format: list[center, center]
 }) {
     const [bounds, setBounds] = useState(
         L.polyline(polyline).getBounds().extend(marker)
@@ -35,29 +32,33 @@ export function Map({
     }, [polyline, marker]);
 
     const squirrelIcon = new Icon({
-        iconUrl: { squirrel },
-        iconSize: [30, 30], // size of the icon
+        iconUrl:
+            'https://raw.githubusercontent.com/anonymous-himalayas/Adventure-App/main/src/assets/squirrel.png',
+        iconSize: [40, 40], // size of the icon
         iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
         popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
     });
 
     const deerIcon = new Icon({
-        iconUrl: { deer },
-        iconSize: [30, 30], // size of the icon
+        iconUrl:
+            'https://raw.githubusercontent.com/anonymous-himalayas/Adventure-App/main/src/assets/deer.png',
+        iconSize: [40, 40], // size of the icon
         iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
         popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
     });
 
     const lionIcon = new Icon({
-        iconUrl: { lion },
-        iconSize: [30, 30], // size of the icon
+        iconUrl:
+            'https://raw.githubusercontent.com/anonymous-himalayas/Adventure-App/main/src/assets/lion.png',
+        iconSize: [40, 40], // size of the icon
         iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
         popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
     });
 
     const raccoonIcon = new Icon({
-        iconUrl: { raccoon },
-        iconSize: [30, 30], // size of the icon
+        iconUrl:
+            'https://raw.githubusercontent.com/anonymous-himalayas/Adventure-App/main/src/assets/rac.png',
+        iconSize: [40, 40], // size of the icon
         iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
         popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
     });
@@ -66,7 +67,7 @@ export function Map({
         <>
             <MapContainer
                 className="w-full h-full rounded-3xl z-0"
-                scrollWheelZoom={false}
+                scrollWheelZoom={true}
                 preferCanvas={true}
                 bounds={bounds}
                 boundsOptions={{ padding: [50, 50] }}
@@ -86,13 +87,13 @@ export function Map({
                 </Marker>
                 <Marker position={[33.890101, -117.691167]} icon={deerIcon}>
                     <Popup>
-                        Mule Deer can reach speeds of up to 45 miles per hour.
+                        Mule deer can reach speeds of up to 45 miles per hour.
                     </Popup>
                 </Marker>
                 <Marker position={[33.890591, -117.692927]} icon={lionIcon}>
                     <Popup>
-                        Mountain Lions have powerful hind legs enable them to
-                        jump as far as 40 to 45 feet.
+                        Mountain lions have powerful hind legs that can jump as
+                        far as 40 to 45 feet.
                     </Popup>
                 </Marker>
                 <Marker position={[33.893352, -117.693785]} icon={raccoonIcon}>
