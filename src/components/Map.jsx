@@ -9,6 +9,10 @@ import {
 } from 'react-leaflet';
 import L, { Icon } from 'leaflet';
 import { trailinfo } from '../assets/demo_traildata';
+import deer from '../assets/deer.png';
+import raccoon from '../assets/rac.png';
+import lion from '../assets/lion.png';
+import squirrel from '../assets/squirrel.png';
 
 function ChangeBounds({ bounds }) {
     const map = useMap();
@@ -31,32 +35,28 @@ export function Map({
     }, [polyline, marker]);
 
     const squirrelIcon = new Icon({
-        iconUrl:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrPYKVkF8iYGZABykJXWOMk6pvvhig4bVd_F8BhGNcjA&s',
+        iconUrl: { squirrel },
         iconSize: [30, 30], // size of the icon
         iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
         popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
     });
 
     const deerIcon = new Icon({
-        iconUrl:
-            'https://upload.wikimedia.org/wikipedia/commons/7/76/The_deer_of_all_lands_%281898%29_Mule_deer_white_background.png',
+        iconUrl: { deer },
         iconSize: [30, 30], // size of the icon
         iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
         popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
     });
 
     const lionIcon = new Icon({
-        iconUrl:
-            'https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTEwL3Jhd3BpeGVsX29mZmljZV8yNl9waG90b19vZl9hX21vdW50YWluX2xpb25fd2Fsa2luZ19zaWRlX3ZpZXdfaV84MjJmYTE5My00Mzc0LTRhMDQtOGQxYy01MDE1M2Q5NDMwZDMucG5n.png',
+        iconUrl: { lion },
         iconSize: [30, 30], // size of the icon
         iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
         popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
     });
 
     const raccoonIcon = new Icon({
-        iconUrl:
-            'https://p7.hiclipart.com/preview/125/519/770/raccoon-squirrel-trapping-cat-raccoon.jpg',
+        iconUrl: { raccoon },
         iconSize: [30, 30], // size of the icon
         iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
         popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
