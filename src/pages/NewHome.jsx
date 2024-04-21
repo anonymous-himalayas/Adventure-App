@@ -7,9 +7,25 @@ import {
     LockKeyholeOpen,
     Map as MapIcon,
     Sparkles,
+    Scroll,
     User,
     X,
 } from 'lucide-react';
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from '../components/ui/accordion';
+import {
+    Dialog,
+    DialogContent,
+    DialogClose,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from '../components/ui/dialog';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -26,11 +42,14 @@ import { Map } from '../components/Map.jsx';
 import { useState, useEffect } from 'react';
 import { useTrailLocation } from '../hooks/useTrailLocation.js';
 import { useTrailNameGemini } from '../hooks/useTrailNameGemini.js';
+import { useNavigate } from 'react-router-dom';
 import { useTrailSuggestionGemini } from '../hooks/useTrailSuggestionGemini';
+import badge from '../assets/silver.png';
+import questList from '../assets/quests.json';
 
 export function NewHome() {
-    const [query, setQuery] = useState('')
-    const [selectTrail, setSelectTrail] = useState('')
+    const [query, setQuery] = useState('');
+    const [selectTrail, setSelectTrail] = useState('');
     const [selectMenuOpen, setSelectMenuOpen] = useState(false);
 
     const [seconds, setSeconds] = useState(0);
@@ -40,6 +59,14 @@ export function NewHome() {
     const trailLocation = useTrailLocation();
     const trailName = useTrailNameGemini();
     const trailSuggestion = useTrailSuggestionGemini();
+    const navigate = useNavigate();
+
+    const quests = questList.sort(() => 0.5 - Math.random()).slice(0, 3);
+
+    useEffect(() => {
+        if (selectTrail !== '')
+            trailLocation.getTrailPolylineFromName(selectTrail);
+    }, [selectTrail]);
 
     useEffect(() => {
         let interval;
@@ -52,14 +79,19 @@ export function NewHome() {
         return () => clearInterval(interval);
     }, [hikeStarted]);
 
+    const toLeaderboard = () => {
+        navigate('/leaderboard');
+    };
+
     return (
-        <div className="flex h-screen bg-gradient-to-r from-green-200 via-green-300 to-blue-200">
+        // bg-gradient-to-r from-green-200 via-green-300 to-blue-200
+        <div className="flex h-screen bg-white">
             {/* Left sidebar */}
-            <nav className="flex flex-col w-64 h-full px-4 py-5 bg-white border-r">
-                <h2 className="text-2xl font-semibold text-gray-900">
+            <nav className="flex flex-col w-64 h-full px-4 py-4 bg-white border-r">
+                <h2 className="text-2xl font-semibold text-gray-900 w-full text-center mt-1">
                     Trail Adventures
                 </h2>
-                <div className="flex flex-col justify-between flex-1 mt-6">
+                <div className="flex flex-col justify-between flex-1 mt-5">
                     {/* Top sidebar buttons */}
                     <aside>
                         <Button
@@ -74,41 +106,57 @@ export function NewHome() {
                             <Input
                                 className="tracking-tighter"
                                 placeholder="What trail do you want to find?"
-                                onChange={e => setQuery(e.target.value)}
-                                onKeyDown={e => e.key === 'Enter' && console.log('input entered')}
+                                onChange={(e) => setQuery(e.target.value)}
+                                onBlur={() => setSelectMenuOpen(false)}
+                                onKeyDown={(e) =>
+                                    e.key === 'Enter' &&
+                                    trailName.getTrailNameGemini(query)
+                                }
+                                onFocus={() => setSelectMenuOpen(true)}
                                 value={query}
                             />
-                            <button onClick={() => {}}>
-                            <Sparkles className="absolute right-2 top-2.5 w-5 h-5 text-gray-200" />
+                            <button
+                                onFocus={() => setSelectMenuOpen(true)}
+                                onClick={() =>
+                                    trailName.getTrailNameGemini(query)
+                                }
+                            >
+                                <Sparkles className="absolute right-2 top-2.5 w-5 h-5 text-gray-200" />
                             </button>
+                            {selectMenuOpen &&
+                                trailName.trailNames.length !== 0 && (
+                                    <ul className="absolute top-11 bg-white rounded-md border border-1 text-sm w-full tracking-tight py-2 shadow-lg">
+                                        {trailName.trailNames.map(
+                                            (name, index) => {
+                                                return (
+                                                    <li
+                                                        key={index}
+                                                        className="hover:bg-gray-400 pl-6 py-1"
+                                                        onMouseDown={() => {
+                                                            setSelectTrail(
+                                                                name
+                                                            );
+                                                            setSelectMenuOpen(
+                                                                false
+                                                            );
+                                                        }}
+                                                    >
+                                                        {name}
+                                                    </li>
+                                                );
+                                            }
+                                        )}
+                                    </ul>
+                                )}
                         </span>
                         <ul className="space-y-2 mt-5">
                             <li>
-                                <Button
-                                    className="justify-start"
-                                    variant="ghost"
-                                >
-                                    <Bookmark className="text-blue-600 w-6 h-6" />
-                                    Saved
-                                </Button>
+                                <SavedRecentAccordion />
                             </li>
                             <li>
-                                <Button
-                                    className="justify-start"
-                                    variant="ghost"
-                                >
-                                    <History className="text-blue-600 w-6 h-6" />
-                                    Recent
-                                </Button>
-                            </li>
-                            <li>
-                                <Button
-                                    className="justify-start"
-                                    variant="ghost"
-                                >
-                                    <Lightbulb className="text-blue-600 w-6 h-6" />
-                                    Suggestions
-                                </Button>
+                                <SuggestionDialog
+                                    trailSuggestion={trailSuggestion}
+                                />
                             </li>
                             <li>
                                 <p className="text-sm tracking-tighter w-56 break-words max-h-56 overflow-auto">
@@ -119,22 +167,26 @@ export function NewHome() {
                     </aside>
                     {/* Bottom sidebar buttons */}
                     <div>
-                        <Button className="justify-start" variant="ghost">
-                            <MapIcon className="text-blue-600 w-6 h-6" />
-                            Quests
-                        </Button>
-                        <div className="mt-2 text-sm font-medium text-gray-700">
-                            Level 3
+                        <QuestMenu quests={quests} />
+                        <div className="flex flex-col items-center">
+                            <div className="w-full h-0.5 mb-3 mt-1 bg-gray-300" />
+                            <img className="w-8 h-8" src={badge} />
+                            <div className="text-sm font-medium text-gray-700">
+                                Level 3
+                            </div>
+                            <Progress
+                                className="w-full bg-blue-200 my-1 h-1.5"
+                                value={70}
+                            />
+                            <span className="text-xs font-semibold text-gray-500">
+                                XP (350/500)
+                            </span>
                         </div>
-                        <Progress className="w-full bg-blue-200" value={70} />
-                        <span className="mt-2 text-xs font-semibold text-gray-500">
-                            XP (350/500)
-                        </span>
                     </div>
                 </div>
             </nav>
             {/* Top bar buttons */}
-            <div className="flex-1 p-10">
+            <div className="flex-1 p-10 -mt-3">
                 <div className="flex items-center justify-between">
                     <div />
                     <div className="space-x-4">
@@ -147,6 +199,7 @@ export function NewHome() {
                         <Button
                             className="text-white bg-blue-600"
                             variant="ghost"
+                            onClick={toLeaderboard}
                         >
                             Leaderboards
                         </Button>
@@ -155,7 +208,10 @@ export function NewHome() {
                 </div>
                 <div className="relative mt-6">
                     <div className="w-full h-[35rem] rounded-md">
-                        <Map />
+                        <Map
+                            marker={trailLocation.center}
+                            polyline={trailLocation.polyline}
+                        />
                     </div>
                 </div>
             </div>
@@ -228,5 +284,118 @@ function StatsMenu({ seconds, setStatsMenuOpen }) {
                 <li>Collectibles found: 3</li>
             </ul>
         </div>
+    );
+}
+
+function SavedRecentAccordion() {
+    return (
+        <Accordion type="single" collapsible className="w-full -mt-4">
+            <AccordionItem value="item-1">
+                <AccordionTrigger>
+                    <Bookmark className="text-blue-600 w-6 h-6 mr-2" />
+                    Saved
+                </AccordionTrigger>
+                <AccordionContent>
+                    <ul className="pl-2">
+                        <li>&#x2022; Puddingstone Trail</li>
+                        <li>&#x2022; Turtle Rock Creek Trail</li>
+                        <li>&#x2022; Eaton Canyon Trail</li>
+                    </ul>
+                </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+                <AccordionTrigger>
+                    <History className="text-blue-600 w-6 h-6 mr-2" />
+                    Recent
+                </AccordionTrigger>
+                <AccordionContent>
+                    <ul className="pl-2">
+                        <li>&#x2022; Brush Canyon Trail</li>
+                        <li>&#x2022; Colby Canyon Trail</li>
+                        <li>&#x2022; Appalachian Trail</li>
+                    </ul>
+                </AccordionContent>
+            </AccordionItem>
+        </Accordion>
+    );
+}
+
+function SuggestionDialog({ trailSuggestion }) {
+    const [query, setQuery] = useState('');
+
+    return (
+        <Dialog>
+            <DialogTrigger asChild>
+                <Button
+                    className="justify-start text-md -mt-2.5"
+                    variant="ghost"
+                >
+                    <Lightbulb className="text-blue-600 w-6 h-6 -ml-4 mr-2" />
+                    Suggestions
+                </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                    <DialogTitle>Want suggestions?</DialogTitle>
+                    <DialogDescription>
+                        Don't know what to do or how to plan your trip? Ask us
+                        for ideas on what to do doing your hike!
+                    </DialogDescription>
+                </DialogHeader>
+                <Input
+                    id="name"
+                    placeholder="Ask me anything about your trip!"
+                    className="col-span-3"
+                    onChange={(e) => setQuery(e.target.value)}
+                />
+                <DialogClose asChild>
+                    <button
+                        type="button"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 w-1/2"
+                        onClick={() => {
+                            trailSuggestion.getTrailSuggestionGemini(query);
+                        }}
+                    >
+                        Get suggestions!
+                        <Sparkles
+                            style={{ color: '#686CF1' }}
+                            className="ml-1 h-5 w-5 text-gray-400"
+                        />
+                    </button>
+                </DialogClose>
+            </DialogContent>
+        </Dialog>
+    );
+}
+
+function QuestMenu({ quests }) {
+    // return (
+    //     <Button className="justify-start text-md pl-1" variant="ghost">
+    //         <MapIcon className="text-blue-600 w-6 h-6 mr-2" />
+    //         Quests
+    //     </Button>
+    // );
+
+    return (
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button className="justify-start text-md pl-1" variant="ghost">
+                    <MapIcon className="text-blue-600 w-6 h-6 mr-2" />
+                    Quests
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="mt-1 mr-10 w-content">
+                <DropdownMenuGroup>
+                    {quests.map((quest, index) => {
+                        return (
+                            <DropdownMenuItem key={index}>
+                                <Scroll className="mr-2 h-4 w-4" />
+                                {quest}
+                            </DropdownMenuItem>
+                        );
+                    })}
+                </DropdownMenuGroup>
+            </DropdownMenuContent>
+        </DropdownMenu>
     );
 }

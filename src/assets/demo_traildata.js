@@ -8,4 +8,4 @@ trail[0]['geojson']['coordinates'].map((coord) => {
     coords.push([coord[1], coord[0]]);
 });
 
-export const demo_traildata = { coords, center };
+export const trailinfo = { coords, center };

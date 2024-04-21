@@ -8,7 +8,7 @@ import {
     useMap,
 } from 'react-leaflet';
 import L, { Icon } from 'leaflet';
-import { trailinfo } from '../assets/sample_traildata';
+import { trailinfo } from '../assets/demo_traildata';
 
 function ChangeBounds({ bounds }) {
     const map = useMap();

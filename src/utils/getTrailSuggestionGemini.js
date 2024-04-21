@@ -6,7 +6,7 @@ import {
 
 const genAI = new GoogleGenerativeAI('AIzaSyDbDmGSBYOCZNkjUoXM2mOWTvs0khrnHi0');
 const model = genAI.getGenerativeModel({
-    model: 'gemini-1.5-pro-latest',
+    model: 'gemini-1.0-pro',
 });
 
 const generationConfig = {
@@ -64,7 +64,6 @@ const result = await chat.sendMessage(
 
 const response = result.response.text();
 console.log(response);
-
 
 if (typeof require !== 'undefined' && require.main === module) {
     const result = await chat.sendMessage(

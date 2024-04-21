@@ -1,22 +1,32 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/spRue73XWqP
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
 import { Button } from '../components/ui/button';
 import { AvatarImage, AvatarFallback, Avatar } from '../components/ui/avatar';
+import { useNavigate } from 'react-router-dom';
+import BronzeBadge from '../assets/bronze.png';
 import SilverBadge from '../assets/silver.png';
 import GoldBadge from '../assets/gold.png';
 
 export function Leaderboard() {
+
+    let navigate = useNavigate();
+    const backToHome = () => {
+        navigate('/test');
+    }
+
     return (
-        <div className="flex bg-gray-100 dark:bg-gray-800 py-12 px-4 sm:px-6 lg:px-8 w-full h-dvh items-center">
+        <div className="flex bg-gray-100 dark:bg-gray-800 py-12 px-4 sm:px-6 lg:px-8 w-full h-dvh items-center flex-col">
             <div className="w-[1000px] mx-auto">
                 <div className="flex items-center justify-between mb-8">
                     <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                         Leaderboard
                     </h2>
                     <div className="flex items-center space-x-4">
+                    <Button
+                        variant="primary"
+                        className="bg-[#686CF1] text-white w-20"
+                        onClick={backToHome}
+                    >
+                        Back
+                    </Button>
                         <Button variant="outline">
                             <FilterIcon className="h-5 w-5 mr-2" />
                             Filter
@@ -63,37 +73,42 @@ export function Leaderboard() {
                                 player="Peter the Anteater"
                                 level="5"
                                 progress="bg-primary rounded-full h-2 w-[60%]"
-
+                                badge={GoldBadge}
                             />
                             <LeaderboardRow
                                 rank="2"
                                 player="John Smith"
                                 level="4"
                                 progress="bg-primary rounded-full h-2 w-[90%]"
+                                badge={GoldBadge}
                             />
                             <LeaderboardRow
                                 rank="3"
                                 player="Joe Bruin"
                                 level="4"
                                 progress="bg-primary rounded-full h-2 w-[35%]"
+                                badge={SilverBadge}
                             />
                             <LeaderboardRow
                                 rank="4"
                                 player="Tom the Cat"
                                 level="3"
                                 progress="bg-primary rounded-full h-2 w-[14%]"
+                                badge={SilverBadge}
                             />
                             <LeaderboardRow
                                 rank="5"
                                 player="Jerry the Mouse"
                                 level="2"
                                 progress="bg-primary rounded-full h-2 w-[73%]"
+                                badge={SilverBadge}
                             />
                             <LeaderboardRow
                                 rank="6"
                                 player="Phineas Flynn"
                                 level="1"
                                 progress="bg-primary rounded-full h-2 w-[42%]"
+                                badge={BronzeBadge}
                             />
                         </tbody>
                     </table>
@@ -158,7 +173,7 @@ function LeaderboardRow({ rank, player, level, progress, badge }) {
             </td>
             <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
-                    <Avatar className="w-10 h-10 mr-4">
+                    <Avatar className="w-10 h-10 mr-4 rounded-none">
                         {/*  badge */}
                         <AvatarImage alt="User Avatar" src={badge} />
                         <AvatarFallback>BO</AvatarFallback>
